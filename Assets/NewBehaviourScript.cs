@@ -26,11 +26,16 @@ public class NewBehaviourScript : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
     }
 
+    void FixedUpdate(){
+        direction = Input.GetAxisRaw("Horizontal");
+        player.velocity = new Vector2(direction * speed, player.velocity.y);
+    }
+
     // Update is called once per frame
     void Update()
     {
         isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        direction = Input.GetAxis("Horizontal");
+        // direction = Input.GetAxis("Horizontal");
 
         if (direction > 0f) {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
@@ -41,25 +46,24 @@ public class NewBehaviourScript : MonoBehaviour
             player.velocity = new Vector2(0, player.velocity.y);
         }
 
-        if((Input.GetButtonDown("Jump")) && isTouchingGround) {
+        if(Input.GetKey(KeyCode.Space) && isTouchingGround==true) {
             isJumping = true;
             jumpTimeCounter = jumpTime; 
             //player.velocity = new Vector2(player.velocity.x, jumpSpeed);
             // player.velocity = new Vector2(player.velocity.x, player.velocity.y * jumpForce);
-            player.velocity = Vector2.up * jumpForce;   
+            player.velocity = Vector2.up * jumpForce;
         }
 
-        if (Input.GetButtonDown("Jump") && isJumping == true) {
+        if (Input.GetKey(KeyCode.Space) && isJumping == true) {
             if (jumpTimeCounter > 0) {
-                // player.velocity = new Vector2(player.velocity.x, player.velocity.y * jumpForce); 
-                player.velocity = Vector2.up * jumpForce;
+                player.velocity =  Vector2.up * jumpForce;
                 jumpTimeCounter -= Time.deltaTime; 
             } else {
                 isJumping = false;
             }
         }
 
-        if (Input.GetButtonDown("Jump")) {
+        if (!Input.GetKey(KeyCode.Space)) {
             isJumping = false;
         }
     }
