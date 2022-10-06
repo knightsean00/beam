@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float speed = 5f;
+    public float speed;
+    public float walkSpeed = 5f;
+    public float runSpeed = 8f;
     public float jumpSpeed = 4f;
     private float direction = 0f; 
     public float jumpForce = 5f;
     public float jumpTime = 0.3f; 
     private Rigidbody2D player; 
+    private bool isRunning;
 
     public Transform groundCheck; 
     public float groundCheckRadius = 0.3f; 
@@ -35,7 +37,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-        // direction = Input.GetAxis("Horizontal");
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+            speed = runSpeed;
+            isRunning = true;
+        } else {
+            speed = walkSpeed;
+            isRunning = false; 
+        }
 
         if (direction > 0f) {
             player.velocity = new Vector2(direction * speed, player.velocity.y);
@@ -46,15 +55,14 @@ public class PlayerMovement : MonoBehaviour
             player.velocity = new Vector2(0, player.velocity.y);
         }
 
-        if(Input.GetKey(KeyCode.Space) && isTouchingGround == true) {
+
+        if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) && isTouchingGround == true) {
             isJumping = true;
             jumpTimeCounter = jumpTime; 
-            //player.velocity = new Vector2(player.velocity.x, jumpSpeed);
-            // player.velocity = new Vector2(player.velocity.x, player.velocity.y * jumpForce);
             player.velocity = Vector2.up * jumpForce;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping == true) {
+        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) && isJumping == true) {
             if (jumpTimeCounter > 0) {
                 player.velocity =  Vector2.up * jumpForce;
                 jumpTimeCounter -= Time.deltaTime; 
@@ -63,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!Input.GetKey(KeyCode.Space)) {
+        if (!(Input.GetKey(KeyCode.Space) || (Input.GetKey(KeyCode.UpArrow)))) {
             isJumping = false;
         }
     }
