@@ -25,11 +25,6 @@ public class EchoResult : MonoBehaviour
         FinalAlpha = Normalize(FinalAlpha);
         InitialAlpha = Normalize(InitialAlpha);
         sprite = GetComponent<SpriteRenderer>();
-
-        // player = GameObject.Find("Player");
-        // if (player != null) {
-
-        // }
     }
 
     public void SetColor(float FractionCompletion) {
