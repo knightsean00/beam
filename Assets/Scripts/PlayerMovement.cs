@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed;
+    private float speed;
     private float walkSpeed = 5f;
     private float runSpeed = 8f;
-    private float jumpSpeed = 4f;
+    private float jumpSpeed = 2f;
     private float direction = 0f; 
     private float jumpForce = 5f;
     private float jumpTime = 0.3f; 
     private Rigidbody2D player; 
     private bool isRunning;
 
+    private bool spaceJump;
+    private bool upJump;
+
     public Transform groundCheck; 
-    private float groundCheckRadius = 0.3f; 
+    private float groundCheckRadius = 0.1f; 
     public LayerMask groundLayer; 
     private bool isTouchingGround; 
 
@@ -56,23 +59,47 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if(Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) && isTouchingGround == true) {
-            isJumping = true;
+        //space bar jumping
+        if(Input.GetKey(KeyCode.Space) && isTouchingGround) {
+            spaceJump = true;
             jumpTimeCounter = jumpTime; 
             player.velocity = Vector2.up * jumpForce;
         }
 
-        if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) && isJumping == true) {
+        if (Input.GetKey(KeyCode.Space) && spaceJump) {
             if (jumpTimeCounter > 0) {
                 player.velocity =  Vector2.up * jumpForce;
                 jumpTimeCounter -= Time.deltaTime; 
             } else {
-                isJumping = false;
+                spaceJump = false;
             }
         }
 
-        if (!(Input.GetKey(KeyCode.Space) || (Input.GetKey(KeyCode.UpArrow)))) {
-            isJumping = false;
+        if (!(Input.GetKey(KeyCode.Space))) {
+            spaceJump = false;
         }
+
+        //up arrow jumping 
+        if(Input.GetKey(KeyCode.UpArrow) && isTouchingGround) {
+            upJump = true;
+            jumpTimeCounter = jumpTime; 
+            player.velocity = Vector2.up * jumpForce;
+        }
+
+        if (Input.GetKey(KeyCode.UpArrow) && upJump) {
+            if (jumpTimeCounter > 0) {
+                player.velocity =  Vector2.up * jumpForce;
+                jumpTimeCounter -= Time.deltaTime; 
+            } else {
+                upJump = false;
+            }
+        }
+
+        if (!(Input.GetKey(KeyCode.UpArrow))) {
+            upJump = false;
+        }
+
+
+
     }
 }
