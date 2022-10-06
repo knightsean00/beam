@@ -18,6 +18,7 @@ public class EchoResult : MonoBehaviour
     public float InitialAlpha = 255;
 
     private SpriteRenderer sprite;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +36,14 @@ public class EchoResult : MonoBehaviour
         InitialB = Normalize(InitialB);
         InitialAlpha = Normalize(InitialAlpha);
         sprite = GetComponent<SpriteRenderer>();
+
+        // player = GameObject.Find("Player");
+        // if (player != null) {
+
+        // }
     }
 
-    public void SetInitialColor(float FractionCompletion) {
-        Debug.Log(GetProgression(FractionCompletion, InitialR, FinalR));
+    public void SetColor(float FractionCompletion) {
         sprite.color = new Color(GetProgression(FractionCompletion, InitialR, FinalR),
                                 GetProgression(FractionCompletion, InitialG, FinalG),
                                 GetProgression(FractionCompletion, InitialB, FinalB),
