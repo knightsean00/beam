@@ -6,15 +6,10 @@ public class EchoResult : MonoBehaviour
 {
     public float ExistLength = 2f;
     private float PassedTime = 0f;
-    
-    public float FinalR = 124;
-    public float FinalG = 116;
-    public float FinalB = 249;
-    public float FinalAlpha = 0;
 
-    public float InitialR = 99;
-    public float InitialG = 176;
-    public float InitialB = 212;
+    public Color Final = new Color32(124, 116, 249, 255);
+    public Color Initial = new Color32(99, 176, 212, 255);
+    public float FinalAlpha = 0;
     public float InitialAlpha = 255;
 
     private SpriteRenderer sprite;
@@ -27,13 +22,7 @@ public class EchoResult : MonoBehaviour
     }
 
     void Awake() {
-        FinalR = Normalize(FinalR);
-        FinalG = Normalize(FinalG);
-        FinalB = Normalize(FinalB);
         FinalAlpha = Normalize(FinalAlpha);
-        InitialR = Normalize(InitialR);
-        InitialG = Normalize(InitialG);
-        InitialB = Normalize(InitialB);
         InitialAlpha = Normalize(InitialAlpha);
         sprite = GetComponent<SpriteRenderer>();
 
@@ -44,9 +33,9 @@ public class EchoResult : MonoBehaviour
     }
 
     public void SetColor(float FractionCompletion) {
-        sprite.color = new Color(GetProgression(FractionCompletion, InitialR, FinalR),
-                                GetProgression(FractionCompletion, InitialG, FinalG),
-                                GetProgression(FractionCompletion, InitialB, FinalB),
+        sprite.color = new Color(GetProgression(FractionCompletion, Initial.r, Final.r),
+                                GetProgression(FractionCompletion, Initial.g, Final.g),
+                                GetProgression(FractionCompletion, Initial.b, Final.b),
                                 InitialAlpha);
     }
  
@@ -58,11 +47,6 @@ public class EchoResult : MonoBehaviour
                                 sprite.color.g,
                                 sprite.color.b,
                                 GetProgression(PassedTime / ExistLength, InitialAlpha, FinalAlpha));
-
-        // sprite.color = new Color(GetProgression(PassedTime / ExistLength, InitialR, FinalR),
-        //                         GetProgression(PassedTime / ExistLength, InitialG, FinalG),
-        //                         GetProgression(PassedTime / ExistLength, InitialB, FinalB),
-        //                         GetProgression(PassedTime / ExistLength, InitialAlpha, FinalAlpha));
 
         if (PassedTime > ExistLength) {
             Object.Destroy(this.gameObject);
