@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
-    public float walkSpeed = 5f;
-    public float runSpeed = 8f;
-    public float jumpSpeed = 4f;
+    private float walkSpeed = 5f;
+    private float runSpeed = 8f;
+    private float jumpSpeed = 4f;
     private float direction = 0f; 
-    public float jumpForce = 5f;
-    public float jumpTime = 0.3f; 
+    private float jumpForce = 5f;
+    private float jumpTime = 0.3f; 
     private Rigidbody2D player; 
     private bool isRunning;
 
     public Transform groundCheck; 
-    public float groundCheckRadius = 0.3f; 
+    private float groundCheckRadius = 0.3f; 
     public LayerMask groundLayer; 
     private bool isTouchingGround; 
 
