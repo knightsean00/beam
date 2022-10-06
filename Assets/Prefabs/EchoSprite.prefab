@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1376193852208027310}
   - component: {fileID: 1376193852208027309}
-  - component: {fileID: -2231794197488902613}
+  - component: {fileID: -395730556101902144}
   m_Layer: 2
   m_Name: EchoSprite
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2231794197488902613
+--- !u!114 &-395730556101902144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,11 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExistLength: 2
-  FinalR: 124
-  FinalG: 116
-  FinalB: 249
+  Final: {r: 0.4862745, g: 0.45490196, b: 0.9764706, a: 1}
+  Initial: {r: 0.3882353, g: 0.6901961, b: 0.83137256, a: 1}
   FinalAlpha: 0
-  InitialR: 99
-  InitialG: 176
-  InitialB: 212
   InitialAlpha: 255
