@@ -7,15 +7,18 @@ public class Echolocation : MonoBehaviour
 
     private Vector3 Direction;
     private float Distance;
+    private float EchoTimer = 0f;
     
+    public float EchoTimeout = .15f;
     public float HalfAngle = 15.0f;
-    public float AngleStepSize = .5f;
+    public float AngleStepSize = .1f;
     public float MaxDistance = 15f;
     public float MinDistance = 5f;
 
 
     public GameObject EchoPrefab;
     public LayerMask PlayerLayerMask;
+    private GameObject EchoResults;
     private EchoResult Script;
 
     void Start()
@@ -25,19 +28,28 @@ public class Echolocation : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        Vector3 MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 Direction = (new Vector3(MousePosition.x, MousePosition.y, 0) - transform.position).normalized;
-
         if (Input.GetMouseButton(0)) {
-            for (float i = -1 * HalfAngle; i < HalfAngle; i += AngleStepSize) {
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Rotate(Direction, i), Distance);
-                GameObject SpawnedObject;
-                if (hit.collider != null) {
-                    Instantiate(EchoPrefab, hit.point, Quaternion.identity).GetComponent<EchoResult>().SetInitialColor(hit.distance / Distance);
-                    // SpawnedObject = Instantiate(EchoPrefab, hit.point, Quaternion.identity);
-                    // SpawnedObject.GetComponent<EchoResult>().SetInitialColor(hit.distance / Distance);
+            if (EchoTimer > 0.0f) {
+                EchoTimer += Time.deltaTime;
+
+                if (EchoTimer > EchoTimeout) {
+                    EchoTimer = 0f;
                 }
-            }          
+            } else {
+                Vector3 MousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 Direction = (new Vector3(MousePosition.x, MousePosition.y, 0) - transform.position).normalized;
+                EchoResults = GameObject.Find("EchoResults");
+
+                EchoTimer += Time.deltaTime;
+                for (float i = -1 * HalfAngle; i < HalfAngle; i += AngleStepSize) {
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, Rotate(Direction, i), Distance);
+                    if (hit.collider != null) {
+                        GameObject SpawnedObject = Instantiate(EchoPrefab, hit.point, Quaternion.identity);
+                        // SpawnedObject.GetComponent<EchoResult>().SetInitialColor(hit.distance / Distance);
+                        SpawnedObject.transform.SetParent(EchoResults.transform);
+                    }
+                }  
+            }
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0) {
