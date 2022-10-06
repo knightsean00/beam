@@ -6,14 +6,14 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float speed = 5f;
-    public float jumpSpeed = 8f;
+    public float jumpSpeed = 4f;
     private float direction = 0f; 
-    public float jumpForce = 4f;
-    public float jumpTime = 0.15f; 
+    public float jumpForce = 5f;
+    public float jumpTime = 0.3f; 
     private Rigidbody2D player; 
 
     public Transform groundCheck; 
-    public float groundCheckRadius; 
+    public float groundCheckRadius = 0.3f; 
     public LayerMask groundLayer; 
     private bool isTouchingGround; 
 
