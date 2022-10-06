@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     public float speed = 5f;
     public float jumpSpeed = 8f;
     private float direction = 0f; 
     public float jumpForce = 4f;
+    public float jumpTime = 0.15f; 
     private Rigidbody2D player; 
 
     public Transform groundCheck; 
@@ -17,7 +18,6 @@ public class NewBehaviourScript : MonoBehaviour
     private bool isTouchingGround; 
 
     private float jumpTimeCounter; 
-    public float jumpTime; 
     private bool isJumping;
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class NewBehaviourScript : MonoBehaviour
             player.velocity = new Vector2(0, player.velocity.y);
         }
 
-        if(Input.GetKey(KeyCode.Space) && isTouchingGround==true) {
+        if(Input.GetKey(KeyCode.Space) && isTouchingGround == true) {
             isJumping = true;
             jumpTimeCounter = jumpTime; 
             //player.velocity = new Vector2(player.velocity.x, jumpSpeed);
