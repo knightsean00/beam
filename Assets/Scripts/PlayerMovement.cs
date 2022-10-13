@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTimeCounter; 
     private bool isJumping;
 
+    public Transform spawnPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +40,12 @@ public class PlayerMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if (player.position.y <=-10) //fall death
+        {
+            isDead();
+        }
+
         isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
@@ -101,5 +108,17 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+         if (collision.gameObject.tag == "Death")
+         {
+            isDead();
+         }
+    }
+
+    void isDead()
+    {
+        player.position = spawnPosition.position;
     }
 }
