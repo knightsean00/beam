@@ -5,6 +5,7 @@ using UnityEngine;
 public class EchoResults : MonoBehaviour
 {
     private GameObject player;
+    public float MaxDistance = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +17,13 @@ public class EchoResults : MonoBehaviour
     void Update()
     {
         player = GameObject.Find("Player");
-        float MaxDistance = 0f;
-        foreach(Transform child in transform) {
-            MaxDistance = Mathf.Max(MaxDistance, (player.transform.position - child.transform.position).magnitude);
-        }
+        // float MaxDistance = 0f;
+        // foreach(Transform child in transform) {
+        //     MaxDistance = Mathf.Max(MaxDistance, (player.transform.position - child.transform.position).magnitude);
+        // }
 
         foreach(Transform child in transform) {
-            child.GetComponent<EchoResult>().SetColor(((player.transform.position - child.transform.position).magnitude) / MaxDistance);
+            child.GetComponent<EchoResult>().SetColor(Mathf.Min((player.transform.position - child.transform.position).magnitude, MaxDistance) / MaxDistance);
         }
     }
 }

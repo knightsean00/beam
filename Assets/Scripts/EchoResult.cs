@@ -33,7 +33,7 @@ public class EchoResult : MonoBehaviour
                                 GetProgression(FractionCompletion, Initial.b, Final.b),
                                 InitialAlpha);
     }
- 
+
     // Update is called once per frame
     void Update()
     {
@@ -47,7 +47,7 @@ public class EchoResult : MonoBehaviour
             Object.Destroy(this.gameObject);
         }
 
-        transform.Rotate(0, 0, 1);
+        // transform.Rotate(0, 0, 1);
     }
 
     float GetProgression(float FractionCompletion, float Initial, float Final) {

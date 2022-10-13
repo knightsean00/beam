@@ -44,7 +44,8 @@ public class Echolocation : MonoBehaviour
                 for (float i = -1 * HalfAngle; i < HalfAngle; i += AngleStepSize) {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, Rotate(Direction, i), Distance);
                     if (hit.collider != null) {
-                        GameObject SpawnedObject = Instantiate(EchoPrefab, hit.point, Quaternion.identity);
+                        Vector3 SpawnPoint = hit.point;
+                        GameObject SpawnedObject = Instantiate(EchoPrefab, SpawnPoint, Quaternion.identity);
                         // SpawnedObject.GetComponent<EchoResult>().SetInitialColor(hit.distance / Distance);
                         SpawnedObject.transform.SetParent(EchoResults.transform);
                     }
