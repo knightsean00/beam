@@ -74,4 +74,8 @@ public class Echolocation : MonoBehaviour
         return new Vector2(Original.x * Mathf.Cos(rad) - Original.y * Mathf.Sin(rad), 
                             Original.x * Mathf.Sin(rad) + Original.y * Mathf.Cos(rad));
     }
+
+    public float GetMaxDistance() {
+        return MaxDistance;
+    }
 }
