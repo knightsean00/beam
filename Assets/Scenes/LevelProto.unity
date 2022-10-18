@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 110332981}
   - component: {fileID: 110332980}
   - component: {fileID: 110332979}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ceiling (3)
   m_TagString: checkpoint
   m_Icon: {fileID: 0}
@@ -1407,7 +1407,7 @@ GameObject:
   - component: {fileID: 833288558}
   - component: {fileID: 833288557}
   - component: {fileID: 833288556}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Ceiling (2)
   m_TagString: checkpoint
   m_Icon: {fileID: 0}
@@ -1543,7 +1543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6d34da45b35584c9ce86e78fdce906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxDistance: 10
 --- !u!4 &896190301
 Transform:
   m_ObjectHideFlags: 0
