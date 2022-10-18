@@ -648,8 +648,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272739943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2547, y: 14.44, z: 0}
-  m_LocalScale: {x: 5.4684234, y: 1.1243894, z: 1}
+  m_LocalPosition: {x: 3.7516, y: 12.4517, z: 0}
+  m_LocalScale: {x: 6.4450836, y: 1.0478185, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1211,7 +1211,7 @@ GameObject:
   - component: {fileID: 738693557}
   m_Layer: 0
   m_Name: Isometric Diamond (2)
-  m_TagString: Untagged
+  m_TagString: checkpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3920,8 +3920,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837232911}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0.2338, y: 11.4562, z: 0}
-  m_LocalScale: {x: 8.893541, y: 1.1243894, z: 1}
+  m_LocalPosition: {x: -1.2344, y: 10.4555, z: 0}
+  m_LocalScale: {x: 6.063237, y: 1.1243894, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
