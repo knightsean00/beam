@@ -23,7 +23,11 @@ public class EchoResults : MonoBehaviour
         // }
 
         foreach(Transform child in transform) {
-            child.GetComponent<EchoResult>().SetColor(Mathf.Min((player.transform.position - child.transform.position).magnitude, MaxDistance) / MaxDistance);
+            if (child.tag == "Danger") {
+                child.GetComponent<EchoResult>().SetDangerColor();
+            } else {
+                child.GetComponent<EchoResult>().SetColor(Mathf.Min((player.transform.position - child.transform.position).magnitude, MaxDistance) / MaxDistance);
+            }
         }
     }
 }

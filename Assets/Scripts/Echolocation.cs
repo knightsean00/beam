@@ -45,7 +45,12 @@ public class Echolocation : MonoBehaviour
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, Rotate(Direction, i), Distance);
                     if (hit.collider != null) {
                         Vector3 SpawnPoint = hit.point;
+
                         GameObject SpawnedObject = Instantiate(EchoPrefab, SpawnPoint, Quaternion.identity);
+
+                        if (hit.transform.tag == "Death") {
+                            SpawnedObject.tag = "Danger";
+                        }
                         // SpawnedObject.GetComponent<EchoResult>().SetInitialColor(hit.distance / Distance);
                         SpawnedObject.transform.SetParent(EchoResults.transform);
                     }

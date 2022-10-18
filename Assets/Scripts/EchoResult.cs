@@ -9,6 +9,7 @@ public class EchoResult : MonoBehaviour
 
     public Color Final = new Color32(124, 116, 249, 255);
     public Color Initial = new Color32(99, 176, 212, 255);
+    public Color Danger = new Color32(235, 106, 92, 255);
     public float FinalAlpha = 0;
     public float InitialAlpha = 255;
 
@@ -32,6 +33,10 @@ public class EchoResult : MonoBehaviour
                                 GetProgression(FractionCompletion, Initial.g, Final.g),
                                 GetProgression(FractionCompletion, Initial.b, Final.b),
                                 InitialAlpha);
+    }
+
+    public void SetDangerColor() {
+        sprite.color = Danger;
     }
 
     // Update is called once per frame
