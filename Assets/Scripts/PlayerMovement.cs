@@ -25,12 +25,14 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTimeCounter; 
     private bool isJumping;
 
-    public Transform spawnPosition;
+    //public Transform spawnPosition;
+    public Vector3 respawnPoint;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
+        respawnPoint = transform.position;
     }
 
     void FixedUpdate(){
@@ -115,10 +117,21 @@ public class PlayerMovement : MonoBehaviour
          {
             isDead();
          }
+
     }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "checkpoint")
+        {
+            respawnPoint = transform.position;
+        }
+    }
+
+
 
     void isDead()
     {
-        player.position = spawnPosition.position;
+        player.position = respawnPoint;//spawnPosition.position;
     }
 }
