@@ -60,12 +60,12 @@ public class Echolocation : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0) {
             Distance = Mathf.Min(MaxDistance, Distance + .5f);
-            Debug.Log(Distance);
+            // Debug.Log(Distance);
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
             Distance = Mathf.Max(MinDistance, Distance - .5f);
-            Debug.Log(Distance);
+            // Debug.Log(Distance);
         }
     }
 
@@ -77,5 +77,9 @@ public class Echolocation : MonoBehaviour
 
     public float GetMaxDistance() {
         return MaxDistance;
+    }
+
+    public float GetDistance() {
+        return Distance;
     }
 }

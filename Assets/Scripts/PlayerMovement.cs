@@ -130,8 +130,9 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    void isDead()
+    public void isDead()
     {
         player.position = respawnPoint;//spawnPosition.position;
     }
+
 }
