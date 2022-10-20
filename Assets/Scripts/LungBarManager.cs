@@ -32,13 +32,13 @@ public class LungBarManager : MonoBehaviour
     }
 
     public void waypointSpin(){
-        int winX = win.position.x;
-        int winY = win.position.y;
+        float winX = win.position.x;
+        float winY = win.position.y;
 
-        int x = player.position.x;
-        int y = player.position.y;
+        float x = player.transform.position.x;
+        float y = player.transform.position.y;
 
-        int hypoDistance = Math.Sqrt(Math.Pow(winX - x,2)+Math.Pow(winY - y,2))
+        float hypoDistance = Mathf.Sqrt(Mathf.Pow(winX - x,2)+Mathf.Pow(winY - y,2));
 
     }
 
