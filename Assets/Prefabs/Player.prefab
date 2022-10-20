@@ -472,7 +472,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -795,7 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d01c145d586d457ba72795aad0adc03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FillSpeed: 0.15
+  FillSpeed: 0.1
   win: {fileID: 0}
 --- !u!198 &1670407583
 ParticleSystem:

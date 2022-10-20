@@ -75,7 +75,7 @@ public class Echolocation : MonoBehaviour
             } else if (Input.GetMouseButton(1)) {
                 Distance = (new Vector3(MousePosition.x, MousePosition.y, 0)).magnitude;
                 
-                if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance * 4)) {
+                if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance * 5)) {
                     EchoTimer += Time.deltaTime; // Start cooldown.
 
                     for (float i = 0; i < 360; i += AngleStepSize) {
