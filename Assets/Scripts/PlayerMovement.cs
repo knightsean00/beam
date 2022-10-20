@@ -139,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
     public void isDead()
     {
         player.position = respawnPoint;//spawnPosition.position;
+        this.GetComponent<LungBarManager>().ResetLung();
     }
 
 }

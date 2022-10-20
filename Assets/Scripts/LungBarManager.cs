@@ -64,6 +64,16 @@ public class LungBarManager : MonoBehaviour
             fillBar.fillAmount = capacity/100;
         }
     }
+    
+    //public reset lung 
+    //reset echolocation -- there should not be any lit up areas
+
+    // EchoResults --- delete each child
+
+    public void ResetLung() {
+        capacity = 100;
+        fillBar.fillAmount = capacity/100;
+    }
 
     // Update is called once per frame
     void Update()
