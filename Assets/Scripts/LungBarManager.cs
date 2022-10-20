@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LungBarManager : MonoBehaviour
 {
     private Image fillBar;
+    private Image waypoint;
     private float capacity = 100; 
     
     public float FillSpeed = .5f;
@@ -13,10 +14,12 @@ public class LungBarManager : MonoBehaviour
 
     private GameObject player;
     // public Vector3 respawnPoint;
+    public Transform win;
 
     void Awake() {
         player = GameObject.Find("PlayerObject");
         fillBar = GameObject.Find("LungFill").GetComponent<Image>();
+        waypoint = GameObject.Find("Waypoint").GetComponent<Image>();
     }
 
     public bool CheckLoseLung(float value) {
@@ -27,6 +30,18 @@ public class LungBarManager : MonoBehaviour
             return true;
         }
     }
+
+    public void waypointSpin(){
+        int winX = win.position.x;
+        int winY = win.position.y;
+
+        int x = player.position.x;
+        int y = player.position.y;
+
+        int hypoDistance = Math.Sqrt(Math.Pow(winX - x,2)+Math.Pow(winY - y,2))
+
+    }
+
 
     // public void LoseLung(float value, float d) {
     //     if (capacity <= 0) {
@@ -58,5 +73,7 @@ public class LungBarManager : MonoBehaviour
              GainLung();
              timer = 0.0f;
         }
+
+
     }
 }
