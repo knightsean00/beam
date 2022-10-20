@@ -31,15 +31,22 @@ public class LungBarManager : MonoBehaviour
         }
     }
 
+    //24.56, 10.5
+
+    // 0, -2.014158
+
+    //128 distance default
+
     public void waypointSpin(){
-        float winX = win.position.x;
+        float winX = win.position.x+10;
         float winY = win.position.y;
 
-        float x = player.transform.position.x;
+        float x = player.transform.position.x+10;
         float y = player.transform.position.y;
 
-        float hypoDistance = Mathf.Sqrt(Mathf.Pow(winX - x,2)+Mathf.Pow(winY - y,2));
+        float angle = Mathf.Atan((winY-y)/(winX-x)) *100 + 90;
 
+        waypoint.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
 
@@ -78,6 +85,7 @@ public class LungBarManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        waypointSpin();
         timer += Time.deltaTime;
         if (timer >= FillSpeed) {
              GainLung();
