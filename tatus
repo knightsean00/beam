@@ -1,0 +1,223 @@
+[33mcommit 3dd0770de143c662264d758d3c7a793a0b8b5a9d[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Sean Knight <knightsean00@gmail.com>
+Date:   Thu Oct 20 05:18:02 2022 -0400
+
+    Adds pulse, fixes some lung capacity issues, and crosshair
+
+[33mcommit 530349c8a4115017329dcade3c25260c4973b761[m
+Merge: ac8264e 1fe42bb
+Author: Kelly Lu <kellylu@dhcp-10-29-55-57.dyn.MIT.EDU>
+Date:   Wed Oct 19 18:40:09 2022 -0400
+
+    Merge branch 'main' of https://github.com/knightsean00/beam
+
+[33mcommit ac8264ef86ab99dfc55088a216d6ebf3f4cc72cc[m
+Author: Kelly Lu <kellylu@dhcp-10-29-55-57.dyn.MIT.EDU>
+Date:   Wed Oct 19 18:39:45 2022 -0400
+
+    preliminary lung capacity
+
+[33mcommit 1fe42bbd92e32bc9a6ec76837ffa99216db1ba96[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Tue Oct 18 14:39:53 2022 -0400
+
+    checkpoint ignore raycast
+
+[33mcommit 3c873783d67130a3adf8aaf380266ca93abfee12[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Tue Oct 18 14:25:21 2022 -0400
+
+    Prototype level adjustments
+
+[33mcommit c3f646b8cb89b7332f9ce812f8f7c381534b17c1[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Tue Oct 18 14:17:35 2022 -0400
+
+    checkpoint echolocation bug
+
+[33mcommit 84f62078799c7dd2e17685d503ac3ebeb89889f9[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Tue Oct 18 11:32:05 2022 -0400
+
+    Switch to WebGL output and add varying danger colors
+
+[33mcommit dc9b6e83e9f5154dddb2b98354ce44798cc184d6[m
+Author: Sean Knight <knightsean00@gmail.com>
+Date:   Tue Oct 18 03:24:46 2022 -0400
+
+    Add special echolocation for dangerous objects
+
+[33mcommit 69fa9540ad161670b2cbe21597ec0cad4ec5044c[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Tue Oct 18 01:14:14 2022 -0400
+
+    Added prototype level and respawn points
+
+[33mcommit 39247aea4a278d29380b6908a1c7cf280ae9f3eb[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 13 16:39:15 2022 -0400
+
+    merging scenes
+
+[33mcommit d74310b7d1a3f07d5cc0fcbc51fa846783cae686[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 13 16:18:37 2022 -0400
+
+    death with respect to player, use death tag for hazards
+
+[33mcommit cbdfff5be5fde8df72a0d537562353d77b0a7267[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 13 16:17:41 2022 -0400
+
+    Add render engine for lighting effects
+
+[33mcommit 80cd2dafd89cbec35e7fafa9fcd62e78f290cd42[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 13 15:57:31 2022 -0400
+
+    implemented death determination with single spike
+
+[33mcommit 95ee5ee8c57ab0ca0f7b3e47fb3914347eece5aa[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 13 14:50:39 2022 -0400
+
+    implemented fall respawn in obstacletest scene
+
+[33mcommit e01a83ccce6affa50151fbca8a183f300e9c4543[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 6 16:36:11 2022 -0400
+
+    Fog sprite mask
+
+[33mcommit 5e2440b795348e05eeb286adf730b6612bfc0103[m
+Merge: 5a8d90c 27c511f
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 6 16:19:52 2022 -0400
+
+    pull issue
+
+[33mcommit 5a8d90c4e088f892ac1114f94eed0b9fcae47cec[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 6 16:14:32 2022 -0400
+
+    setting thing
+
+[33mcommit 27c511f5dd293daf8002d363620e504d40356449[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 6 16:13:29 2022 -0400
+
+    Change EchoResult prefab size
+
+[33mcommit bd404f0ccda5f716f316df4d3e50e3a19f8eb3e7[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 6 16:02:45 2022 -0400
+
+    Scene camera issue
+
+[33mcommit 8026a5a048b6536b9d61ad860a85ecdeac2f766c[m
+Author: Ness Vera <vvness@mit.edu>
+Date:   Thu Oct 6 15:59:27 2022 -0400
+
+    Camera following
+
+[33mcommit 94aada06d25631ead67f0dd5628f0433c233ed81[m
+Merge: 155434d fd89645
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.MIT.EDU>
+Date:   Thu Oct 6 15:50:29 2022 -0400
+
+    Whoops
+
+[33mcommit 155434d9b000d36548aabe663e185a1c07da0d7d[m
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.MIT.EDU>
+Date:   Thu Oct 6 15:49:00 2022 -0400
+
+    jumping actually fixed
+
+[33mcommit fd896459255bc9fa8c6c89824b7bccd224f9efeb[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 6 15:47:21 2022 -0400
+
+    Use Color32 instead of individual values for quick color setting
+
+[33mcommit 656b1b7ed9156e47a0de82389440444c9a000054[m
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.MIT.EDU>
+Date:   Thu Oct 6 15:25:23 2022 -0400
+
+    movement variables fixed
+
+[33mcommit fb9b614d761fe83a344e0e9087ed8093057831af[m
+Merge: 05aa1fd b0260c5
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.MIT.EDU>
+Date:   Thu Oct 6 15:18:10 2022 -0400
+
+    player run, up arrow jump'
+
+[33mcommit 05aa1fde9eb8733cffedfccc46b326c2a3088169[m
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.mit.edu>
+Date:   Thu Oct 6 15:14:33 2022 -0400
+
+    player can run + up arrow to jump implemented
+
+[33mcommit b0260c5db42dc26e2dd73d7ef46dc5279b621b73[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 6 15:07:57 2022 -0400
+
+    Add EchoResults parent to scene
+
+[33mcommit e505d62314a68b33079666ee742302b05296c9c9[m
+Merge: af8fec8 bf31343
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 6 15:07:31 2022 -0400
+
+    Merge branch 'main' of github.com:knightsean00/beam into main
+
+[33mcommit af8fec8d99ea58a947aa345231dc0311c1b4daed[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Thu Oct 6 15:07:20 2022 -0400
+
+    Add EchoResult Parent
+
+[33mcommit bf31343d8c00d6f55ff1d38012e6e1c7d0ac734a[m
+Author: Kelly Lu <kellylu@dhcp-10-31-39-13.dyn.MIT.EDU>
+Date:   Thu Oct 6 14:47:29 2022 -0400
+
+    jumping variables updated
+
+[33mcommit 961260b0aa9a310a94abff7f7f40f27c31e55047[m
+Author: Sean Knight <knightsean00@gmail.com>
+Date:   Thu Oct 6 01:34:43 2022 -0400
+
+    Add initial implementation of echolocation
+
+[33mcommit 198dc1db5b142788d1f6590cd0b4222aacf8667b[m
+Author: Kelly Lu <kellylu@Kellys-MacBook-Pro-3.local>
+Date:   Wed Oct 5 01:56:48 2022 -0400
+
+    implemented higher jumps (hold space to jump higher)
+
+[33mcommit 41d1e4bc800fcbb06319d5d5881bc6c812fefb15[m
+Author: Kelly Lu <kellylu@dhcp-10-31-63-78.dyn.MIT.EDU>
+Date:   Tue Oct 4 16:52:35 2022 -0400
+
+    preliminary setup with player and ground
+
+[33mcommit a350753a52037e129bb0ff0ab16a937f63607245[m
+Merge: 2cb5cad c9055e7
+Author: Sean Knight <seknight@mit.edu>
+Date:   Tue Oct 4 15:02:33 2022 -0400
+
+    Merge pull request #1 from knightsean00/master
+    
+    Initial commiot
+
+[33mcommit c9055e7909cf9c649aa2267c6ad58aa916eeb048[m
+Author: Sean Knight <seknight@mit.edu>
+Date:   Tue Oct 4 15:00:52 2022 -0400
+
+    Initial commiot
+
+[33mcommit 2cb5cad4137d8aaf7ce3cd348794940994a3c0d5[m
+Author: Sean Knight <knightsean00@gmail.com>
+Date:   Sun Oct 2 03:44:11 2022 -0400
+
+    Initial commit

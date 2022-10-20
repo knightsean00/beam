@@ -115,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
     {
          if (collision.gameObject.tag == "Death")
          {
+            GetComponent<ParticleSystem>().Play();
             isDead();
          }
 
