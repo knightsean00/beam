@@ -20,8 +20,10 @@ public class Echolocation : MonoBehaviour
     private GameObject EchoResults;
     private GameObject PlayerObject;
 
-    public Color LineColor;
+    public Color CrosshairColor;
+    public Color CircleColor;
     private LineRenderer CrosshairRenderer;
+    private LineRenderer CrosshairCircleRenderer;
     private List<Vector3> Positions = new List<Vector3>();
 
     void Start()
@@ -32,44 +34,61 @@ public class Echolocation : MonoBehaviour
     void Awake() {
         PlayerObject = GameObject.Find("PlayerObject");
         EchoResults = GameObject.Find("EchoResults");
+
         CrosshairRenderer = GameObject.Find("Crosshair").GetComponent<LineRenderer>();
-        CrosshairRenderer.startColor = LineColor;
-        CrosshairRenderer.endColor = LineColor;
+        CrosshairRenderer.startColor = CrosshairColor;
+        CrosshairRenderer.endColor = CrosshairColor;
+
+        CrosshairCircleRenderer = GameObject.Find("CrosshairCircle").GetComponent<LineRenderer>();
+        CrosshairCircleRenderer.startColor = CircleColor;
+        CrosshairCircleRenderer.endColor = CircleColor;
     }
 
     // Update is called once per frame
     void Update() {
         CrosshairRenderer.transform.position = PlayerObject.transform.position;
+        CrosshairCircleRenderer.transform.position = PlayerObject.transform.position;
+
         Vector3 MousePosition = PlayerObject.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
         Vector3 Direction = (new Vector3(MousePosition.x, MousePosition.y, 0)).normalized;
 
-        CrosshairRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 2;
+        CrosshairRenderer.positionCount = (int) HalfAngle * 2 + 3;
         Vector3[] Positions = new Vector3[CrosshairRenderer.positionCount];
 
         Positions[0] = new Vector3(0, 0, 0);
         int count = 1;
-        for (float i = HalfAngle; i < 360 - HalfAngle; i += 1) {
+        for (float i = -1 * HalfAngle; i <= HalfAngle; i += 1) {
             Positions[count] = Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), i);
             count += 1;
         }
         Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
         CrosshairRenderer.SetPositions(Positions);
-        // CrosshairRenderer.positionCount = 3;
-        // CrosshairRenderer.SetPositions(new Vector3[3] {
-        //     Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), HalfAngle), 
-        //     new Vector3(0, 0, 0), 
-        //     Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), -HalfAngle)
-        // });
 
+
+        CrosshairCircleRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 3;
+        Positions = new Vector3[CrosshairCircleRenderer.positionCount];
+
+        Positions[0] = new Vector3(0, 0, 0);
+        count = 1;
+        for (float i = HalfAngle; i <= 360 - HalfAngle; i += 1) {
+            Positions[count] = Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), i);
+            count += 1;
+        }
+        Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
+        CrosshairCircleRenderer.SetPositions(Positions);
 
         if (EchoTimer > 0.0f) {
             EchoTimer += Time.deltaTime;
-            CrosshairRenderer.startColor = new Color(LineColor.r, LineColor.g, LineColor.b, 0);
-            CrosshairRenderer.endColor = new Color(LineColor.r, LineColor.g, LineColor.b, 0);
+            CrosshairRenderer.startColor = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
+            CrosshairRenderer.endColor = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
+            CrosshairCircleRenderer.startColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
+            CrosshairCircleRenderer.endColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
 
             if (EchoTimer > EchoTimeout) {
-                CrosshairRenderer.startColor = LineColor;
-                CrosshairRenderer.endColor = LineColor;
+                CrosshairRenderer.startColor = CrosshairColor;
+                CrosshairRenderer.endColor = CrosshairColor;
+                CrosshairCircleRenderer.startColor = CircleColor;
+                CrosshairCircleRenderer.endColor = CircleColor;
                 EchoTimer = 0f;
             }
         } else if (EchoTimer == 0.0f) {
