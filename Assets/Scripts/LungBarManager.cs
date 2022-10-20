@@ -5,24 +5,21 @@ using UnityEngine.UI;
 
 public class LungBarManager : MonoBehaviour
 {
-    public Image fillBar;
+    private Image fillBar;
     private float capacity = 100; 
-    public int timer = 0;
     
-    private float distance;
+    public float FillSpeed = .5f;
+    private float timer = 0.0f;
+
     private GameObject player;
-    public Vector3 respawnPoint;
+    // public Vector3 respawnPoint;
 
     void Awake() {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("PlayerObject");
+        fillBar = GameObject.Find("LungFill").GetComponent<Image>();
     }
 
-    //value should be set to 2.0f, d is current loudness (Distance)
-    //will calculate the value to be subtracted based on these two values 
-    public bool CheckEcholocation(float value, float d) {
-        //update value based on loudness of scream
-        value *= (d/15.0f);
-
+    public bool CheckLoseLung(float value) {
         if (capacity - value < 0) {
             return false;
         } else {
@@ -31,20 +28,20 @@ public class LungBarManager : MonoBehaviour
         }
     }
 
-    public void LoseLung(float value, float d) {
-        if (capacity <= 0) {
-            return;
-        }
+    // public void LoseLung(float value, float d) {
+    //     if (capacity <= 0) {
+    //         return;
+    //     }
 
-        //update value based on loudness of scream
-        value *= (d/15.0f);
+    //     //update value based on loudness of scream
+    //     value *= (d/15.0f);
 
-        capacity -= value;
-        fillBar.fillAmount = capacity/100;
-        if (capacity <= 0) {
-            Debug.Log("OUT OF LUNG CAPACITY");
-        }
-    }
+    //     capacity -= value;
+    //     fillBar.fillAmount = capacity/100;
+    //     if (capacity <= 0) {
+    //         Debug.Log("OUT OF LUNG CAPACITY");
+    //     }
+    // }
 
     public void GainLung() {
         if (capacity < 100) {
@@ -56,17 +53,10 @@ public class LungBarManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += 1;
-        if (timer == 25) { //50 calls = 1 second
+        timer += Time.deltaTime;
+        if (timer >= FillSpeed) {
              GainLung();
-             timer = 0;
+             timer = 0.0f;
         }
-
-        if (Input.GetMouseButton(0)) {
-            distance = player.GetComponent<Echolocation>().GetDistance();
-            Debug.Log(distance);
-            LoseLung(2.0f, distance);
-        }
-        
     }
 }
