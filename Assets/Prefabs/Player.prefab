@@ -483,14 +483,32 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.008497687
-        value: 0.53205186
+        time: 0
+        value: 0.50526613
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5015247
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0.4946439
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -530,7 +548,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 0
-  m_Loop: 0
+  m_Loop: 1
 --- !u!1 &5601620100024768527
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,7 +800,7 @@ MonoBehaviour:
   MaxDistance: 15
   MinDistance: 5
   EchoPrefab: {fileID: 1376193852208027307, guid: 808426e8d7d09b04286fb223c7635ba4, type: 3}
-  LineColor: {r: 1, g: 1, b: 1, a: 0.49019608}
+  LineColor: {r: 1, g: 1, b: 1, a: 0.19607843}
 --- !u!114 &8827389992543015200
 MonoBehaviour:
   m_ObjectHideFlags: 0

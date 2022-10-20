@@ -43,12 +43,23 @@ public class Echolocation : MonoBehaviour
         Vector3 MousePosition = PlayerObject.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
         Vector3 Direction = (new Vector3(MousePosition.x, MousePosition.y, 0)).normalized;
 
-        CrosshairRenderer.positionCount = 3;
-        CrosshairRenderer.SetPositions(new Vector3[3] {
-            Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), HalfAngle), 
-            new Vector3(0, 0, 0), 
-            Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), -HalfAngle)
-        });
+        CrosshairRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 2;
+        Vector3[] Positions = new Vector3[CrosshairRenderer.positionCount];
+
+        Positions[0] = new Vector3(0, 0, 0);
+        int count = 1;
+        for (float i = HalfAngle; i < 360 - HalfAngle; i += 1) {
+            Positions[count] = Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), i);
+            count += 1;
+        }
+        Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
+        CrosshairRenderer.SetPositions(Positions);
+        // CrosshairRenderer.positionCount = 3;
+        // CrosshairRenderer.SetPositions(new Vector3[3] {
+        //     Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), HalfAngle), 
+        //     new Vector3(0, 0, 0), 
+        //     Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), -HalfAngle)
+        // });
 
 
         if (EchoTimer > 0.0f) {
