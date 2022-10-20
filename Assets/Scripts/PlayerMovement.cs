@@ -140,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player.position = respawnPoint;//spawnPosition.position;
         this.GetComponent<LungBarManager>().ResetLung();
+        GameObject.Find("EchoResults").GetComponent<EchoResults>().Reset();
     }
 
 }

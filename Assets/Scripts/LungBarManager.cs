@@ -9,7 +9,7 @@ public class LungBarManager : MonoBehaviour
     private Image waypoint;
     private float capacity = 100; 
     
-    public float FillSpeed = .5f;
+    public float FillSpeed;
     private float timer = 0.0f;
 
     private GameObject player;
