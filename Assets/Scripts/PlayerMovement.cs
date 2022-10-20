@@ -115,9 +115,10 @@ public class PlayerMovement : MonoBehaviour
     {
          if (collision.gameObject.tag == "Death")
          {
+            GetComponent<ParticleSystem>().Play();
             isDead();
          }
-
+        
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -126,6 +127,11 @@ public class PlayerMovement : MonoBehaviour
         {
             respawnPoint = transform.position;
         }
+
+        if (collision.gameObject.tag == "Win")
+         {
+            GetComponent<ParticleSystem>().Play();
+         }
     }
 
 
