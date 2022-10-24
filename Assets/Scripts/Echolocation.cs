@@ -93,7 +93,7 @@ public class Echolocation : MonoBehaviour
                 CrosshairCircleRenderer.endColor = CircleColor;
                 EchoTimer = 0f;
             }
-        } else if (EchoTimer == 0.0f) {
+        } else if (EchoTimer == 0.0f && !PlayerObject.GetComponent<PlayerMovement>().getDead()) {
             if (Input.GetMouseButton(0)) {
                 Distance = (new Vector3(MousePosition.x, MousePosition.y, 0)).magnitude;
                 
