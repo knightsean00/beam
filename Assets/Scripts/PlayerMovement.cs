@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private float jumpTimeCounter; 
     private bool isJumping;
 
-    //public Transform spawnPosition;
+    public AudioSource death;
+    public AudioSource respawn;
     public Vector3 respawnPoint;
 
     // Start is called before the first frame update
@@ -115,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
     {
          if (collision.gameObject.tag == "Death")
          {
+            death.Play();
             GetComponent<ParticleSystem>().Play();
             isDead();
          }
@@ -139,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
     public void isDead()
     {
         player.position = respawnPoint;//spawnPosition.position;
+        respawn.Play();
         this.GetComponent<LungBarManager>().ResetLung();
         GameObject.Find("EchoResults").GetComponent<EchoResults>().Reset();
     }

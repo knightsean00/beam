@@ -19,6 +19,8 @@ public class Echolocation : MonoBehaviour
     public GameObject EchoPrefab;
     private GameObject EchoResults;
     private GameObject PlayerObject;
+    public AudioSource echo;
+    public AudioSource quietEcho;
 
     public Color CrosshairColor;
     public Color CircleColor;
@@ -97,6 +99,7 @@ public class Echolocation : MonoBehaviour
                 
                 if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance)) {
                     EchoTimer += Time.deltaTime; // Start cooldown.
+                    quietEcho.Play();
 
                     for (float i = -1 * HalfAngle; i < HalfAngle; i += AngleStepSize) {
                         EcholocationRaycast(Rotate(Direction, i), Distance);
@@ -107,6 +110,7 @@ public class Echolocation : MonoBehaviour
                 
                 if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance * 5)) {
                     EchoTimer += Time.deltaTime; // Start cooldown.
+                    echo.Play();
 
                     for (float i = 0; i < 360; i += AngleStepSize) {
                         EcholocationRaycast(Rotate(Direction, i), Distance);
