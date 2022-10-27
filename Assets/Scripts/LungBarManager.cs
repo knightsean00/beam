@@ -10,7 +10,10 @@ public class LungBarManager : MonoBehaviour
     public float maxCapacity = 100; 
     private float capacity;
     
-    public float FillSpeed;
+    public float MinFillSpeed = 2.5f;
+    public float MaxFillSpeed = 30;
+    public float FillBoostSpeed = 2; // time it takes to transition min to max
+    public float FillBoostDelay = 2;
     private float timer = 0.0f;
 
     private GameObject player;
@@ -24,11 +27,18 @@ public class LungBarManager : MonoBehaviour
         capacity = maxCapacity;
     }
 
+    public float FillSpeed() {
+        var fillEvalTime = -FillBoostSpeed * (Time.time - timer - FillBoostDelay);
+        var rawFillRate = 1 / (1 + Mathf.Exp(fillEvalTime));
+        return Mathf.Lerp(MinFillSpeed, MaxFillSpeed, rawFillRate);
+    }
+
     public bool CheckLoseLung(float value) {
         if (capacity - value < 0) {
             return false;
         } else {
             capacity -= value;
+            timer = Time.time;
             return true;
         }
     }
@@ -51,7 +61,6 @@ public class LungBarManager : MonoBehaviour
         waypoint.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-
     // public void LoseLung(float value, float d) {
     //     if (capacity <= 0) {
     //         return;
@@ -69,7 +78,7 @@ public class LungBarManager : MonoBehaviour
 
     public void GainLung() {
         if (capacity < maxCapacity) {
-            capacity = Mathf.Min(maxCapacity, capacity + FillSpeed * Time.deltaTime);
+            capacity = Mathf.Min(maxCapacity, capacity + FillSpeed() * Time.deltaTime);
             fillBar.fillAmount = capacity/maxCapacity;
         }
     }

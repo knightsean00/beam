@@ -29,7 +29,7 @@ public class Echolocation : MonoBehaviour
     private MouseLatch rightMouse = new MouseLatch(1);
 
     public Color CrosshairColor;
-    public GradientColorKey CrosshairColorBox;
+    public GradientAlphaKey CrosshairAlphaBox;
     public Color CircleColor;
     private LineRenderer CrosshairRenderer;
     private LineRenderer CrosshairCircleRenderer;
@@ -48,10 +48,10 @@ public class Echolocation : MonoBehaviour
 
         CrosshairRenderer = GameObject.Find("Crosshair").GetComponent<LineRenderer>();
         var grad = new Gradient();
-        CrosshairColorBox = new GradientColorKey(CrosshairColor, 0.0f);
+        CrosshairAlphaBox = new GradientAlphaKey(1f, 0.5f);
         grad.SetKeys(
-            new GradientColorKey[] { CrosshairColorBox, CrosshairColorBox },
-            new GradientAlphaKey[] { new GradientAlphaKey(0f, 0.0f), new GradientAlphaKey(1f, 0.5f), new GradientAlphaKey(0f, 1.0f) }
+            new GradientColorKey[] { new GradientColorKey(CrosshairColor, 0.0f), new GradientColorKey(CrosshairColor, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(0f, 0.0f), CrosshairAlphaBox, new GradientAlphaKey(0f, 1.0f) }
         );
         CrosshairRenderer.colorGradient = grad;
         CrosshairRenderer.loop = false;
@@ -59,6 +59,14 @@ public class Echolocation : MonoBehaviour
         CrosshairCircleRenderer = GameObject.Find("CrosshairCircle").GetComponent<LineRenderer>();
         CrosshairCircleRenderer.startColor = CircleColor;
         CrosshairCircleRenderer.endColor = CircleColor;
+    }
+
+    void SetCrosshairAlpha(float alpha) {
+        var grad = CrosshairRenderer.colorGradient;
+        var alphaKeys = grad.alphaKeys;
+        alphaKeys[1].alpha = alpha;
+        grad.SetKeys(grad.colorKeys, alphaKeys);
+        CrosshairRenderer.colorGradient = grad;
     }
 
     // Update is called once per frame
@@ -75,8 +83,8 @@ public class Echolocation : MonoBehaviour
 
         if (EchoTimer > 0.0f) {
             EchoTimer += Time.deltaTime;
+            SetCrosshairAlpha(1f - Mathf.Min(1f, EchoTimer / EchoTimeout));
             // TODO fix this
-            // CrosshairColorBox.color = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
             CrosshairCircleRenderer.startColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
             CrosshairCircleRenderer.endColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
 
@@ -88,6 +96,7 @@ public class Echolocation : MonoBehaviour
                 EchoTimer = 0f;
             }
         } else if (EchoTimer == 0.0f && !PlayerObject.GetComponent<PlayerMovement>().getDead()) {
+            SetCrosshairAlpha(leftMouse.Held ? 1f : 0f);
             if (leftMouse.Latch() && CursorDistance >= MinDistance) {
                 var Distance = MaxDistance;
                 
@@ -159,7 +168,7 @@ public class Echolocation : MonoBehaviour
             CrosshairCircleRenderer.positionCount = 0;
         }
 
-        if (leftMouse.Held && CursorDistance >= MinDistance) {
+        if (lungs.GetCapacity() >= MaxDistance && CursorDistance >= MinDistance) {
             CrosshairRenderer.positionCount = 3;
             var Positions = new Vector3[CrosshairRenderer.positionCount];
             var BaseVec = Direction * ((MinDistance + MaxDistance) / 2);
