@@ -159,7 +159,7 @@ public class Echolocation : MonoBehaviour
             CrosshairCircleRenderer.positionCount = 0;
         }
 
-        if (CursorDistance >= MinDistance) {
+        if (leftMouse.Held && CursorDistance >= MinDistance) {
             CrosshairRenderer.positionCount = 3;
             var Positions = new Vector3[CrosshairRenderer.positionCount];
             var BaseVec = Direction * ((MinDistance + MaxDistance) / 2);
