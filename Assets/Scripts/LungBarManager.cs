@@ -7,7 +7,8 @@ public class LungBarManager : MonoBehaviour
 {
     private Image fillBar;
     private Image waypoint;
-    private float capacity = 100; 
+    public float maxCapacity = 100; 
+    private float capacity;
     
     public float FillSpeed;
     private float timer = 0.0f;
@@ -20,6 +21,7 @@ public class LungBarManager : MonoBehaviour
         player = GameObject.Find("PlayerObject");
         fillBar = GameObject.Find("LungFill").GetComponent<Image>();
         waypoint = GameObject.Find("Waypoint").GetComponent<Image>();
+        capacity = maxCapacity;
     }
 
     public bool CheckLoseLung(float value) {
@@ -66,10 +68,18 @@ public class LungBarManager : MonoBehaviour
     // }
 
     public void GainLung() {
-        if (capacity < 100) {
-            capacity += 0.5f;
-            fillBar.fillAmount = capacity/100;
+        if (capacity < maxCapacity) {
+            capacity = Mathf.Min(maxCapacity, capacity + FillSpeed * Time.deltaTime);
+            fillBar.fillAmount = capacity/maxCapacity;
         }
+    }
+
+    public void SetLungWanted(float wanted) {
+        // TODO: render a second bar for predicted lung
+    }
+
+    public float GetCapacity() {
+        return capacity;
     }
     
     //public reset lung 
@@ -78,20 +88,14 @@ public class LungBarManager : MonoBehaviour
     // EchoResults --- delete each child
 
     public void ResetLung() {
-        capacity = 100;
-        fillBar.fillAmount = capacity/100;
+        capacity = maxCapacity;
+        fillBar.fillAmount = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
         waypointSpin();
-        timer += Time.deltaTime;
-        if (timer >= FillSpeed) {
-             GainLung();
-             timer = 0.0f;
-        }
-
-
+        GainLung();
     }
 }

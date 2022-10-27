@@ -6,14 +6,16 @@ public class Echolocation : MonoBehaviour
 {
 
     private Vector3 Direction;
-    private float Distance;
     private float EchoTimer = 0f;
     
     public float EchoTimeout = .15f;
     public float HalfAngle = 15.0f;
     public float AngleStepSize = .1f;
-    public float MaxDistance = 15f;
-    public float MinDistance = 5f;
+    public float MaxDistance = 10f;
+    public float MinDistance = 2.5f;
+    public float ChargeTime = 5f;
+    public float ChargeCostMul = 5f;
+    //public float MinCharge = 0.2f;
 
 
     public GameObject EchoPrefab;
@@ -21,21 +23,27 @@ public class Echolocation : MonoBehaviour
     private GameObject PlayerObject;
     public AudioSource echo;
     public AudioSource quietEcho;
+    private LungBarManager lungs;
+
+    private MouseLatch leftMouse = new MouseLatch(0);
+    private MouseLatch rightMouse = new MouseLatch(1);
 
     public Color CrosshairColor;
     public Color CircleColor;
     private LineRenderer CrosshairRenderer;
     private LineRenderer CrosshairCircleRenderer;
-    private List<Vector3> Positions = new List<Vector3>();
 
     void Start()
     {
-        Distance = (MinDistance + MaxDistance) / 2;
     }
 
     void Awake() {
         PlayerObject = GameObject.Find("PlayerObject");
         EchoResults = GameObject.Find("EchoResults");
+        lungs = GetComponent<LungBarManager>();
+
+        leftMouse.Awake();
+        rightMouse.Awake();
 
         CrosshairRenderer = GameObject.Find("Crosshair").GetComponent<LineRenderer>();
         CrosshairRenderer.startColor = CrosshairColor;
@@ -48,36 +56,15 @@ public class Echolocation : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        var MousePosition = PlayerObject.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
+        var Offset = new Vector3(MousePosition.x, MousePosition.y, 0);
+        var CursorDistance = Offset.magnitude;
+        var Direction = Offset.normalized;
+
         CrosshairRenderer.transform.position = PlayerObject.transform.position;
         CrosshairCircleRenderer.transform.position = PlayerObject.transform.position;
 
-        Vector3 MousePosition = PlayerObject.transform.InverseTransformPoint(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0)));
-        Vector3 Direction = (new Vector3(MousePosition.x, MousePosition.y, 0)).normalized;
-
-        CrosshairRenderer.positionCount = (int) HalfAngle * 2 + 3;
-        Vector3[] Positions = new Vector3[CrosshairRenderer.positionCount];
-
-        Positions[0] = new Vector3(0, 0, 0);
-        int count = 1;
-        for (float i = -1 * HalfAngle; i <= HalfAngle; i += 1) {
-            Positions[count] = Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), i);
-            count += 1;
-        }
-        Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
-        CrosshairRenderer.SetPositions(Positions);
-
-
-        CrosshairCircleRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 3;
-        Positions = new Vector3[CrosshairCircleRenderer.positionCount];
-
-        Positions[0] = new Vector3(0, 0, 0);
-        count = 1;
-        for (float i = HalfAngle; i <= 360 - HalfAngle; i += 1) {
-            Positions[count] = Rotate(new Vector3(MousePosition.x, MousePosition.y, 0), i);
-            count += 1;
-        }
-        Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
-        CrosshairCircleRenderer.SetPositions(Positions);
+        Render(Offset);
 
         if (EchoTimer > 0.0f) {
             EchoTimer += Time.deltaTime;
@@ -94,10 +81,10 @@ public class Echolocation : MonoBehaviour
                 EchoTimer = 0f;
             }
         } else if (EchoTimer == 0.0f && !PlayerObject.GetComponent<PlayerMovement>().getDead()) {
-            if (Input.GetMouseButton(0)) {
-                Distance = (new Vector3(MousePosition.x, MousePosition.y, 0)).magnitude;
+            if (leftMouse.Latch()) {
+                var Distance = MaxDistance;
                 
-                if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance)) {
+                if (lungs.CheckLoseLung(Distance)) {
                     EchoTimer += Time.deltaTime; // Start cooldown.
                     quietEcho.Play();
 
@@ -105,10 +92,11 @@ public class Echolocation : MonoBehaviour
                         EcholocationRaycast(Rotate(Direction, i), Distance);
                     }  
                 }
-            } else if (Input.GetMouseButton(1)) {
-                Distance = (new Vector3(MousePosition.x, MousePosition.y, 0)).magnitude;
+            }
+            if (rightMouse.Latch()) {
+                var DistanceQ = ChargeDistance();
                 
-                if (this.GetComponent<LungBarManager>().CheckLoseLung(Distance * 5)) {
+                if (DistanceQ is float Distance && lungs.CheckLoseLung(Distance * ChargeCostMul)) {
                     EchoTimer += Time.deltaTime; // Start cooldown.
                     echo.Play();
 
@@ -118,6 +106,7 @@ public class Echolocation : MonoBehaviour
                 }
             }
         }
+
 
         // if (Input.GetAxis("Mouse ScrollWheel") > 0) {
         //     Distance = Mathf.Min(MaxDistance, Distance + .5f);
@@ -130,6 +119,61 @@ public class Echolocation : MonoBehaviour
         // }
     }
 
+    // Charge distance as dictated by charge time.
+    float MaxChargeDistance() {
+        var sigSteepness = 12; // adjust for L&F as necessary
+        var sigCenter = 0.4f; // adjust for L&F as necessary
+        var sigmoidParam = -(rightMouse.HeldTime - ChargeTime * sigCenter) * sigSteepness / ChargeTime;
+        var sigmoid = 1 / (1 + Mathf.Exp(sigmoidParam));
+        return Mathf.Lerp(MinDistance, MaxDistance, sigmoid);
+    }
+
+    // Actual charge distance as constrained by lung cap.
+    float? ChargeDistance() {
+        var bestDistance = Mathf.Min(MaxChargeDistance(), lungs.GetCapacity() / ChargeCostMul);
+        return bestDistance >= MinDistance ? bestDistance : null;
+    }
+
+    void Render(Vector3 MousePosition) {
+        var CursorDistance = MousePosition.magnitude;
+        var Direction = MousePosition.normalized;
+
+        float minHollaDist;
+        if (rightMouse.Held && ChargeDistance() is float dist) {
+            minHollaDist = dist;
+            CrosshairCircleRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 3;
+            var Positions = new Vector3[CrosshairCircleRenderer.positionCount];
+            var BaseVec = Direction * minHollaDist;
+
+            Positions[0] = new Vector3(0, 0, 0);
+            var count = 1;
+            for (float i = HalfAngle; i <= 360 - HalfAngle; i += 1) {
+                Positions[count] = Rotate(BaseVec, i);
+                count += 1;
+            }
+            Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
+            CrosshairCircleRenderer.SetPositions(Positions);
+        } else {
+            minHollaDist = 0;
+            CrosshairCircleRenderer.positionCount = 0;
+        }
+
+        {
+            CrosshairRenderer.positionCount = (int) HalfAngle * 2 + 3;
+            var Positions = new Vector3[CrosshairRenderer.positionCount];
+            var BaseVec = Direction * Mathf.Max(Mathf.Max(CursorDistance, MinDistance), minHollaDist);
+
+            Positions[0] = new Vector3(0, 0, 0);
+            int count = 1;
+            for (float i = -1 * HalfAngle; i <= HalfAngle; i += 1) {
+                Positions[count] = Rotate(BaseVec, i);
+                count += 1;
+            }
+            Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
+            CrosshairRenderer.SetPositions(Positions);
+        }
+    }
+
     Vector2 Rotate(Vector2 Original, float Rotation) {
         float rad = Rotation * Mathf.Deg2Rad;
         return new Vector2(Original.x * Mathf.Cos(rad) - Original.y * Mathf.Sin(rad), 
@@ -138,10 +182,6 @@ public class Echolocation : MonoBehaviour
 
     public float GetMaxDistance() {
         return MaxDistance;
-    }
-
-    public float GetDistance() {
-        return Distance;
     }
 
     private void EcholocationRaycast(Vector2 Direction, float CutoffDistance) {

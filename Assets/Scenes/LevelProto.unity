@@ -2025,6 +2025,18 @@ PrefabInstance:
       propertyPath: quietEcho
       value: 
       objectReference: {fileID: 114813256}
+    - target: {fileID: 5779984680266420284, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
+      propertyPath: ChargeTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779984680266420284, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779984680266420284, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
+      propertyPath: MinDistance
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5779984680266420285, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
       propertyPath: death
       value: 
@@ -2081,6 +2093,10 @@ PrefabInstance:
       propertyPath: win
       value: 
       objectReference: {fileID: 1102612743}
+    - target: {fileID: 8827389992543015200, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
+      propertyPath: FillSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5779984680266420258, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 67995e925c52cc24cb4116854a160f55, type: 3}
