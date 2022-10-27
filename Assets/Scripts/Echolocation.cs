@@ -29,6 +29,7 @@ public class Echolocation : MonoBehaviour
     private MouseLatch rightMouse = new MouseLatch(1);
 
     public Color CrosshairColor;
+    public GradientColorKey CrosshairColorBox;
     public Color CircleColor;
     private LineRenderer CrosshairRenderer;
     private LineRenderer CrosshairCircleRenderer;
@@ -46,8 +47,14 @@ public class Echolocation : MonoBehaviour
         rightMouse.Awake();
 
         CrosshairRenderer = GameObject.Find("Crosshair").GetComponent<LineRenderer>();
-        CrosshairRenderer.startColor = CrosshairColor;
-        CrosshairRenderer.endColor = CrosshairColor;
+        var grad = new Gradient();
+        CrosshairColorBox = new GradientColorKey(CrosshairColor, 0.0f);
+        grad.SetKeys(
+            new GradientColorKey[] { CrosshairColorBox, CrosshairColorBox },
+            new GradientAlphaKey[] { new GradientAlphaKey(0f, 0.0f), new GradientAlphaKey(1f, 0.5f), new GradientAlphaKey(0f, 1.0f) }
+        );
+        CrosshairRenderer.colorGradient = grad;
+        CrosshairRenderer.loop = false;
 
         CrosshairCircleRenderer = GameObject.Find("CrosshairCircle").GetComponent<LineRenderer>();
         CrosshairCircleRenderer.startColor = CircleColor;
@@ -68,20 +75,20 @@ public class Echolocation : MonoBehaviour
 
         if (EchoTimer > 0.0f) {
             EchoTimer += Time.deltaTime;
-            CrosshairRenderer.startColor = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
-            CrosshairRenderer.endColor = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
+            // TODO fix this
+            // CrosshairColorBox.color = new Color(CrosshairColor.r, CrosshairColor.g, CrosshairColor.b, 0);
             CrosshairCircleRenderer.startColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
             CrosshairCircleRenderer.endColor = new Color(CircleColor.r, CircleColor.g, CircleColor.b, 0);
 
             if (EchoTimer > EchoTimeout) {
-                CrosshairRenderer.startColor = CrosshairColor;
-                CrosshairRenderer.endColor = CrosshairColor;
+                //CrosshairRenderer.startColor = CrosshairColor;
+                //CrosshairRenderer.endColor = CrosshairColor;
                 CrosshairCircleRenderer.startColor = CircleColor;
                 CrosshairCircleRenderer.endColor = CircleColor;
                 EchoTimer = 0f;
             }
         } else if (EchoTimer == 0.0f && !PlayerObject.GetComponent<PlayerMovement>().getDead()) {
-            if (leftMouse.Latch()) {
+            if (leftMouse.Latch() && CursorDistance >= MinDistance) {
                 var Distance = MaxDistance;
                 
                 if (lungs.CheckLoseLung(Distance)) {
@@ -138,39 +145,32 @@ public class Echolocation : MonoBehaviour
         var CursorDistance = MousePosition.magnitude;
         var Direction = MousePosition.normalized;
 
-        float minHollaDist;
         if (rightMouse.Held && ChargeDistance() is float dist) {
-            minHollaDist = dist;
-            CrosshairCircleRenderer.positionCount = 360 - (int) (HalfAngle * 2) + 3;
+            CrosshairCircleRenderer.positionCount = 360;
             var Positions = new Vector3[CrosshairCircleRenderer.positionCount];
-            var BaseVec = Direction * minHollaDist;
+            var BaseVec = Direction * dist;
 
             Positions[0] = new Vector3(0, 0, 0);
-            var count = 1;
-            for (float i = HalfAngle; i <= 360 - HalfAngle; i += 1) {
-                Positions[count] = Rotate(BaseVec, i);
-                count += 1;
+            for (int i = 0; i < 360; i += 1) {
+                Positions[i] = Rotate(BaseVec, (float) i);
             }
-            Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
             CrosshairCircleRenderer.SetPositions(Positions);
         } else {
-            minHollaDist = 0;
             CrosshairCircleRenderer.positionCount = 0;
         }
 
-        {
-            CrosshairRenderer.positionCount = (int) HalfAngle * 2 + 3;
+        if (CursorDistance >= MinDistance) {
+            CrosshairRenderer.positionCount = 3;
             var Positions = new Vector3[CrosshairRenderer.positionCount];
-            var BaseVec = Direction * Mathf.Max(Mathf.Max(CursorDistance, MinDistance), minHollaDist);
+            var BaseVec = Direction * ((MinDistance + MaxDistance) / 2);
 
-            Positions[0] = new Vector3(0, 0, 0);
-            int count = 1;
-            for (float i = -1 * HalfAngle; i <= HalfAngle; i += 1) {
-                Positions[count] = Rotate(BaseVec, i);
-                count += 1;
-            }
-            Positions[Positions.Length - 1] = new Vector3(0, 0, 0);
+            Positions[0] = Rotate(BaseVec, -HalfAngle);
+            Positions[1] = new Vector3(0, 0, 0);
+            Positions[2] = Rotate(BaseVec, HalfAngle);
             CrosshairRenderer.SetPositions(Positions);
+
+        } else {
+            CrosshairRenderer.positionCount = 0;
         }
     }
 
